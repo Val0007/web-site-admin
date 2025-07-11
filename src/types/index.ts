@@ -38,11 +38,10 @@ export interface TabData {
   }
 
 
-export enum PopupType{
-    Error="ERROR",
-    Warning="ALERT",
-    Success="Success"
-}
+
+
+ type PopupType = "ERROR" | "ALERT" | "SUCCESS"
+export const PopupTypes:PopupType[] = ["ERROR","ALERT","SUCCESS"] //this will supply the type PopupTypes[2]
 
 export interface PopupContent {
   type:PopupType

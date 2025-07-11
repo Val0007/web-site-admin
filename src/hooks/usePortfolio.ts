@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {  PopupType, type Content, type Links, type PopupContent, type TabData, type SiteData } from '../types/index';
+import {   type Content, type Links, type PopupContent, type TabData, type SiteData } from '../types/index';
 
 export const usePortfolioData = () => {
   // Structure data
@@ -17,7 +17,7 @@ export const usePortfolioData = () => {
   const [wildcard, setWildcard] = useState("");
   const [displayPopup,setPopup] = useState<boolean>(false);
   const [popupMsg, setPopupMsg] = useState<PopupContent>({
-    type: PopupType.Warning, // or PopupType.Error
+    type: "ALERT", // or PopupType.Error
     titleMsg: "",
     descMsg: "",
     setShow: () => {},

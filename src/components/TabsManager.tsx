@@ -1,5 +1,5 @@
 import React from 'react';
-import { PopupType, type PopupContent } from '../types';
+import { type PopupContent } from '../types';
 
 interface TabsManagerProps {
   tabs: string[];
@@ -12,7 +12,7 @@ interface TabsManagerProps {
 }
 
 const TabsManager: React.FC<TabsManagerProps> = ({
-  tabs, setTabs, addTab, removeTab,showError , updateTab
+  tabs, addTab, removeTab,showError , updateTab
 }) => {
 
   return (
@@ -28,7 +28,7 @@ const TabsManager: React.FC<TabsManagerProps> = ({
                 else{
                     const hasEmptyTab = tabs.some(tab => tab.trim() === "");
                     if(hasEmptyTab){
-                        showError({titleMsg:"Tab name must not be empty",descMsg:"Add missing fields",type:PopupType.Error,setShow:()=>{}})
+                        showError({titleMsg:"Tab name must not be empty",descMsg:"Add missing fields",type:"ERROR",setShow:()=>{}})
                         return
                     }
                     addTab()

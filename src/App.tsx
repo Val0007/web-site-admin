@@ -9,7 +9,6 @@ import Popup from './components/Popup';
 import { fetchUser } from './api/fetch';
 import { useAuth } from './Provider/AuthProvider';
 import Spinner from './components/Spinner';
-import { PopupType } from './types';
 
 function App() {
   const [activeTab, setActiveTab] = useState('structure');
@@ -29,7 +28,7 @@ function App() {
       }
       catch(e:any){
         setLoading(false)
-        portfolioData.setPopupMsg({titleMsg:e.message,descMsg:"Error",type:PopupType.Error,setShow:()=>{}})
+        portfolioData.setPopupMsg({titleMsg:e.message,descMsg:"Error",type:"ERROR",setShow:()=>{}})
         portfolioData.setPopup(true)
       }
     }

@@ -1,16 +1,15 @@
 import React from "react";
-import { PopupType } from "../types";
 import type { PopupContent } from "../types";
 
 const Popup: React.FC<PopupContent> = (popup) => {
   return (
     <div className="">
       <div className="bg-white rounded-lg p-6 w-96">
-              <h3 className={`text-lg font-semibold mb-4 text-center ${popup.type === PopupType.Error
+              <h3 className={`text-lg font-semibold mb-4 text-center ${popup.type === "ERROR"
                       ? "text-red-500"
-                      : popup.type === PopupType.Warning
+                      : popup.type === "ALERT"
                           ? "text-blue-500"
-                          : popup.type === PopupType.Success
+                          : popup.type === "SUCCESS"
                               ? "text-green-600"
                               : ""
                   }`}>

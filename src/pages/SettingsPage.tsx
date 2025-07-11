@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { PopupType, type PopupContent } from '../types';
+import {  PopupTypes, type PopupContent } from '../types';
 import { updateWildCard } from '../api/fetch';
 import { useAuth } from '../Provider/AuthProvider';
 
@@ -43,7 +43,7 @@ const SettingsTab: React.FC<SettingsTabProps> = ({
               onClick={async ()=>{
 
                 if(oldWildCard.current == wildcard){
-                    setPopupMsg({titleMsg:`Try something different`,descMsg:`Update with a new wildcard`,type:PopupType.Warning,setShow:()=>{}})
+                    setPopupMsg({titleMsg:`Try something different`,descMsg:`Update with a new wildcard`,type:"ALERT",setShow:()=>{}})
                     setShowPopup(true)
                     return
                 }
@@ -53,17 +53,17 @@ const SettingsTab: React.FC<SettingsTabProps> = ({
                 try{
                 const bool = await updateWildCard(`/users/wildcard/${wildcard}`,token || "")
                 if(bool){
-                    setPopupMsg({titleMsg:`Updated Successfully`,descMsg:`Your site URL : ${wildcard}.zipfolio.xyz`,type:PopupType.Success,setShow:()=>{}})
+                    setPopupMsg({titleMsg:`Updated Successfully`,descMsg:`Your site URL : ${wildcard}.zipfolio.xyz`,type:PopupTypes[2],setShow:()=>{}})
                     oldWildCard.current = wildcard
                 }
                 else{
-                    setPopupMsg({titleMsg:`Wildcard not available`,descMsg:`Try a different wildcard`,type:PopupType.Error,setShow:()=>{}})
+                    setPopupMsg({titleMsg:`Wildcard not available`,descMsg:`Try a different wildcard`,type:"ERROR",setShow:()=>{}})
                     setWildcard(oldWildCard.current)
                 }
                 }
                 catch(e:any){
                     setWildcard(oldWildCard.current)
-                    setPopupMsg({titleMsg:"Error",descMsg:`Try a different wildcard`,type:PopupType.Error,setShow:()=>{}})
+                    setPopupMsg({titleMsg:"Error",descMsg:`Try a different wildcard`,type:"ERROR",setShow:()=>{}})
                 }
                 setLoading(false)
                 setShowPopup(true)

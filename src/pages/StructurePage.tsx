@@ -3,7 +3,7 @@ import BasicInfoForm from '../components/BasicInfo';
 import SkillsManager from '../components/SkillsManager';
 import TabsManager from '../components/TabsManager';
 import type { Links } from '../types';
-import { PopupType, type PopupContent } from '../types';
+import {  type PopupContent } from '../types';
 
 
 interface StructureTabProps {
@@ -37,7 +37,7 @@ const StructureTab: React.FC<StructureTabProps> = ({
     if (tabs.length > 0 && name.length > 0 && !tabs.some(tab => tab.trim() === "")) {
       setActiveTab("content");
     } else {
-        showError({titleMsg:"Tabs names or your name must not be empty",descMsg:"Add missing fields",type:PopupType.Error,setShow:()=>{}})
+        showError({titleMsg:"Tabs names or your name must not be empty",descMsg:"Add missing fields",type:"ERROR",setShow:()=>{}})
       console.log("Please fill in required fields");
     }
   };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PopupType, type PopupContent, type SiteData } from '../types';
+import { type PopupContent, type SiteData } from '../types';
 import { updateUser } from '../api/fetch';
 import { useAuth } from '../Provider/AuthProvider';
 
@@ -36,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
           <button
             onClick={() => {
               if (!tabsLength) {
-                setPopupMsg({titleMsg:"Tabs must not be empty",descMsg:"Tabs must have a name",type:PopupType.Error,setShow:()=>{}})
+                setPopupMsg({titleMsg:"Tabs must not be empty",descMsg:"Tabs must have a name",type:"ERROR",setShow:()=>{}})
                 setShowPopup(true)
                 return
               };
@@ -71,13 +71,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
             setLoading(false)
 
             //Show success
-            setPopupMsg({titleMsg:"Data updated successfully",descMsg:`Access your site : ${wildcard}`,type:PopupType.Success,setShow:()=>{}})
+            setPopupMsg({titleMsg:"Data updated successfully",descMsg:`Access your site : ${wildcard}`,type:"SUCCESS",setShow:()=>{}})
             setShowPopup(true)
             }
             catch(e:any){
                 setLoading(false)
                 console.log(e.message);
-                setPopupMsg({titleMsg:e.message,descMsg:"Error",type:PopupType.Error,setShow:()=>{}})
+                setPopupMsg({titleMsg:e.message,descMsg:"Error",type:"ERROR",setShow:()=>{}})
                 setShowPopup(true)
 
             }
