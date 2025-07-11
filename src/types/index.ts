@@ -40,7 +40,8 @@ export interface TabData {
 
 export enum PopupType{
     Error="ERROR",
-    Warning="ALERT"
+    Warning="ALERT",
+    Success="Success"
 }
 
 export interface PopupContent {

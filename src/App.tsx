@@ -8,9 +8,12 @@ import SettingsTab from './pages/SettingsPage';
 import Popup from './components/Popup';
 import { fetchUser } from './api/fetch';
 import { useAuth } from './Provider/AuthProvider';
+import Spinner from './components/Spinner';
+import { PopupType } from './types';
 
 function App() {
   const [activeTab, setActiveTab] = useState('structure');
+  const [loading,setLoading] = useState(true);
   const portfolioData = usePortfolioData();
   const {token} = useAuth()
 
@@ -19,16 +22,24 @@ function App() {
 
     //If logged in or have token - fetch exisitng data
     async function getData(){
+      try{
       const data = await fetchUser("/users",token || "")
       portfolioData.initialiseData(data)
+      setLoading(false)
+      }
+      catch(e:any){
+        setLoading(false)
+        portfolioData.setPopupMsg({titleMsg:e.message,descMsg:"Error",type:PopupType.Error,setShow:()=>{}})
+        portfolioData.setPopup(true)
+      }
     }
     getData()
 
   },[])
 
   return (
-    <div>
-    <div className="flex h-screen bg-gray-100">
+    <div className=''>
+    <div className="flex flex-col lg:flex-row h-auto lg:h-screen  bg-gray-100">
       <Sidebar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab}
@@ -36,9 +47,12 @@ function App() {
         setShowPopup={portfolioData.setPopup}
         setPopupMsg={portfolioData.setPopupMsg}
         getSiteData={portfolioData.getSiteData}
+        setLoading={setLoading}
+        wildcard={portfolioData.wildcard}
+
       />
       
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto">
         {activeTab === 'structure' && (
           <StructureTab
             name={portfolioData.name}
@@ -83,6 +97,7 @@ function App() {
             setTheme={portfolioData.setTheme}
             setShowPopup={portfolioData.setPopup}
           setPopupMsg={portfolioData.setPopupMsg}
+          setLoading={setLoading}
           />
         )}
       </div>
@@ -94,7 +109,13 @@ function App() {
       ></Popup>
           </div>
        : null }
+       {loading ?  
+       <div className='fixed inset-0 bg-gray-500 opacity-90 flex items-center justify-center z-50'>
+          <Spinner loading={loading}></Spinner>
+        </div>
+        : null}
     </div>
+    
 
   );
 }

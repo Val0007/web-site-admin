@@ -10,13 +10,16 @@ interface SidebarProps {
   setPopupMsg:(arg0: PopupContent)=>void
   setShowPopup:(arg0:boolean)=>void
   getSiteData:()=>SiteData
+  setLoading:(arg0: boolean)=>void
+  wildcard:string
+  
 }
 
 
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,setPopupMsg,setShowPopup,getSiteData }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,setPopupMsg,setShowPopup,getSiteData,setLoading,wildcard }) => {
     const {logout} = useAuth()
     return (
-      <div className="w-64 bg-white shadow-lg">
+      <div className="w-full lg:w-64 bg-white shadow-lg lg:h-full">
         <div className="p-4 border-b">
           <h1 className="text-xl font-bold text-gray-800">Zip Folio</h1>
         </div>
@@ -59,8 +62,25 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
         onClick={async ()=>{
             const data = getSiteData()
             console.log(data)
+            setLoading(true)
+            try{
+
+            
             const result = await updateUser("/users",data,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbGxpeWFwcGFudmVsdTg4OEBnbWFpbC5jb20iLCJpYXQiOjE3NTE3Mzc3Nzd9.HCJFD1FUZIdoaj4MRrNX2yvESrPtcOlltI4k-7Sa-Hs")
             console.log(result)
+            setLoading(false)
+
+            //Show success
+            setPopupMsg({titleMsg:"Data updated successfully",descMsg:`Access your site : ${wildcard}`,type:PopupType.Success,setShow:()=>{}})
+            setShowPopup(true)
+            }
+            catch(e:any){
+                setLoading(false)
+                console.log(e.message);
+                setPopupMsg({titleMsg:e.message,descMsg:"Error",type:PopupType.Error,setShow:()=>{}})
+                setShowPopup(true)
+
+            }
         }}
         >Save and Publish</button>
         <button className='bg-blue-600 text-white w-4/5 py-2 px-4 rounded cursor-pointer mt-5 '

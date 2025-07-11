@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { PopupType, type PopupContent } from '../types';
+import { updateWildCard } from '../api/fetch';
+import { useAuth } from '../Provider/AuthProvider';
 
 interface SettingsTabProps {
   wildcard: string;
@@ -8,15 +10,18 @@ interface SettingsTabProps {
   setTheme: (theme: string) => void;
   setPopupMsg:(arg0: PopupContent)=>void
   setShowPopup:(arg0:boolean)=>void
+  setLoading:(arg0: boolean)=>void
+
 }
 
 const SettingsTab: React.FC<SettingsTabProps> = ({
-  wildcard, setWildcard, theme, setTheme , setPopupMsg , setShowPopup
+  wildcard, setWildcard, theme, setTheme , setPopupMsg , setShowPopup,setLoading
 }) => {
   const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTheme(e.target.value);
   };
-
+  const {token} = useAuth()
+  const oldWildCard = useRef(wildcard)
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Site Settings</h2>
@@ -35,12 +40,35 @@ const SettingsTab: React.FC<SettingsTabProps> = ({
                 placeholder="Enter your wildcard"
               />
               <button className='flex-1 bg-blue-600 text-white rounded'
-              onClick={()=>{
+              onClick={async ()=>{
+
+                if(oldWildCard.current == wildcard){
+                    setPopupMsg({titleMsg:`Try something different`,descMsg:`Update with a new wildcard`,type:PopupType.Warning,setShow:()=>{}})
+                    setShowPopup(true)
+                    return
+                }
+
                 //check backend
-                setPopupMsg({titleMsg:`Updated Successfully`,descMsg:`Your site URL : ${wildcard}.site.com`,type:PopupType.Warning,setShow:()=>{}})
+                setLoading(true)
+                try{
+                const bool = await updateWildCard(`/users/wildcard/${wildcard}`,token || "")
+                if(bool){
+                    setPopupMsg({titleMsg:`Updated Successfully`,descMsg:`Your site URL : ${wildcard}.zipfolio.xyz`,type:PopupType.Success,setShow:()=>{}})
+                    oldWildCard.current = wildcard
+                }
+                else{
+                    setPopupMsg({titleMsg:`Wildcard not available`,descMsg:`Try a different wildcard`,type:PopupType.Error,setShow:()=>{}})
+                    setWildcard(oldWildCard.current)
+                }
+                }
+                catch(e:any){
+                    setWildcard(oldWildCard.current)
+                    setPopupMsg({titleMsg:"Error",descMsg:`Try a different wildcard`,type:PopupType.Error,setShow:()=>{}})
+                }
+                setLoading(false)
                 setShowPopup(true)
               }}
-              >Check</button>
+              >Update</button>
             </div>
           </div>
           <div>

@@ -6,7 +6,16 @@ const Popup: React.FC<PopupContent> = (popup) => {
   return (
     <div className="">
       <div className="bg-white rounded-lg p-6 w-96">
-        <h3 className={`text-lg font-semibold mb-4 text-center ${popup.type === PopupType.Error ? " text-red-500" : " text-blue-500"}`}>{popup.type}</h3>
+              <h3 className={`text-lg font-semibold mb-4 text-center ${popup.type === PopupType.Error
+                      ? "text-red-500"
+                      : popup.type === PopupType.Warning
+                          ? "text-blue-500"
+                          : popup.type === PopupType.Success
+                              ? "text-green-600"
+                              : ""
+                  }`}>
+                  {popup.type}
+              </h3>
         <h3 className="text-lg font-semibold mb-4">{popup.titleMsg}</h3>
         <p className="text-gray-800 mb-4">
         {popup.descMsg}

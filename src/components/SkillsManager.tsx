@@ -30,7 +30,7 @@ const SkillsManager: React.FC<SkillsManagerProps> = ({
           placeholder="Enter Skill"
         />
       </div>
-      <div className='flex rounded-lg w-full border border-gray-300 h-auto py-4 px-3 gap-2'>
+      <div className='flex rounded-lg w-full border border-gray-300 h-auto py-4 px-3 gap-2 flex-wrap'>
         {skills.length === 0 ? (
           <div className="text-gray-500 p-2">No skills added yet</div>
         ) : (

@@ -1,5 +1,9 @@
 import React from 'react';
 import type { Content, TabData } from '../types';
+import structure1 from "../assets/structure1.png"
+import structure2 from "../assets/structure2.png"
+import structure3 from "../assets/structure3.png"
+
 
 interface ContentTabProps {
   tabs: string[];
@@ -25,6 +29,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
   
     const selectStructureId = (structureId: number) => {
       setStructureId(selectedTabForStructure, structureId);
+      content[selectedTabForStructure]["structureId"] = structureId
       setShowStructurePopup(false);
     };
   
@@ -40,7 +45,7 @@ const ContentTab: React.FC<ContentTabProps> = ({
           <div className="space-y-6">
             {tabs.map((tab, index) => (
               <div key={index} className="bg-white rounded-lg p-6 shadow">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex flex-col lg:flex-row items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-700">{tab}</h3>
                   <div className="flex items-center gap-3">
                     {tabStructureIds[tab] && (
@@ -50,14 +55,14 @@ const ContentTab: React.FC<ContentTabProps> = ({
                     )}
                     <button
                       onClick={() => openStructurePopup(tab)}
-                      className="flex items-center gap-2 bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 transition-colors"
+                      className="flex items-center gap-2 bg-blue-600 text-white px-3 py-1 rounded  transition-colors"
                     >
                       {tabStructureIds[tab] ? 'Change Structure' : 'Select Structure'}
                     </button>
                     {tabStructureIds[tab] && (!content[tab] || content[tab].data.length < 5) && (
                       <button
                         onClick={() => addContentItem(tab)}
-                        className="flex items-center gap-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition-colors"
+                        className="flex items-center gap-2 bg-blue-600 text-white px-3 py-1 rounded  transition-colors"
                       >
                         Add Content
                       </button>
@@ -131,35 +136,37 @@ const ContentTab: React.FC<ContentTabProps> = ({
   
         {/* Structure ID Selection Popup */}
         {showStructurePopup && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-96">
-              <h3 className="text-lg font-semibold mb-4">Select Structure ID for {selectedTabForStructure}</h3>
-              
-              <div className="space-y-3 mb-6">
-                {[1, 2, 3].map((id) => (
-                  <button
-                    key={id}
-                    onClick={() => selectStructureId(id)}
-                    className={`w-full p-3 border rounded-lg text-left hover:bg-gray-50 transition-colors ${
-                      tabStructureIds[selectedTabForStructure] === id 
-                        ? 'border-blue-500 bg-blue-50 text-blue-700' 
-                        : 'border-gray-300'
-                    }`}
-                  >
-                    Structure ID {id}
-                  </button>
-                ))}
-              </div>
-              
-              <button
-                onClick={() => setShowStructurePopup(false)}
-                className="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white rounded-lg p-6 w-96">
+      <h3 className="text-lg font-semibold mb-4">Select Structure ID for {selectedTabForStructure}</h3>
+      <div className="space-y-3 mb-6">
+        {[structure1, structure2, structure3].map((image,index) => (
+          <button
+            key={index+1}
+            onClick={() => selectStructureId(index+1)}
+            className={`w-full p-3 border rounded-lg text-left hover:bg-gray-50 transition-colors flex items-center gap-3 ${
+              tabStructureIds[selectedTabForStructure] === index+1
+                ? 'border-blue-500 bg-blue-50 text-blue-700'
+                : 'border-gray-300'
+            }`}
+          >
+            <img 
+              src={`${image}`}
+              alt={`Structure ${index+1}`}
+              className="w-full h-50 object-contain rounded border"
+            />
+          </button>
+        ))}
+      </div>
+      <button
+        onClick={() => setShowStructurePopup(false)}
+        className="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-colors"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
       </div>
     );
   };
