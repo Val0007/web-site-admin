@@ -74,7 +74,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
             setLoading(false)
 
             //Show success
-            setPopupMsg({titleMsg:"Data updated successfully",descMsg:`Access your site : ${wildcard}`,type:"SUCCESS",setShow:()=>{}})
+            setPopupMsg({titleMsg:"Data updated successfully",descMsg:`Access your site : ${wildcard}.zipfolio.xyz`,type:"SUCCESS",setShow:()=>{}})
             setShowPopup(true)
             }
             catch(e:any){

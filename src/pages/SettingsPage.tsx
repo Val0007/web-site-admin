@@ -53,7 +53,7 @@ const SettingsTab: React.FC<SettingsTabProps> = ({
                 try{
                 const bool = await updateWildCard(`/users/wildcard/${wildcard}`,token || "")
                 if(bool){
-                    setPopupMsg({titleMsg:`Updated Successfully`,descMsg:`Your site URL : ${wildcard}.zipfolio.xyz`,type:PopupTypes[2],setShow:()=>{}})
+                    setPopupMsg({titleMsg:`Updated Successfully`,descMsg:`Save and Publish to access your site at: ${wildcard}.zipfolio.xyz`,type:PopupTypes[2],setShow:()=>{}})
                     oldWildCard.current = wildcard
                 }
                 else{
