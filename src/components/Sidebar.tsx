@@ -17,7 +17,7 @@ interface SidebarProps {
 
 
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,setPopupMsg,setShowPopup,getSiteData,setLoading,wildcard }) => {
-    const {logout} = useAuth()
+    const {token,logout} = useAuth()
     return (
       <div className="w-full lg:w-64 bg-white shadow-lg lg:h-full">
         <div className="p-4 border-b">
@@ -69,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
             try{
 
             
-            const result = await updateUser("/users",newData,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbGxpeWFwcGFudmVsdTg4OEBnbWFpbC5jb20iLCJpYXQiOjE3NTE3Mzc3Nzd9.HCJFD1FUZIdoaj4MRrNX2yvESrPtcOlltI4k-7Sa-Hs")
+            const result = await updateUser("/users",newData,token || "")
             console.log(result)
             setLoading(false)
 
