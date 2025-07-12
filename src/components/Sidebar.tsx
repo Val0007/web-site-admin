@@ -62,11 +62,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
         onClick={async ()=>{
             const data = getSiteData()
             console.log(data)
+            const newData:any = data
+            delete newData["wildcard"]
             setLoading(true)
             try{
 
             
-            const result = await updateUser("/users",data,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbGxpeWFwcGFudmVsdTg4OEBnbWFpbC5jb20iLCJpYXQiOjE3NTE3Mzc3Nzd9.HCJFD1FUZIdoaj4MRrNX2yvESrPtcOlltI4k-7Sa-Hs")
+            const result = await updateUser("/users",newData,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbGxpeWFwcGFudmVsdTg4OEBnbWFpbC5jb20iLCJpYXQiOjE3NTE3Mzc3Nzd9.HCJFD1FUZIdoaj4MRrNX2yvESrPtcOlltI4k-7Sa-Hs")
             console.log(result)
             setLoading(false)
 
