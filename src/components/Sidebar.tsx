@@ -64,6 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
             console.log(data)
             const newData:any = data
             delete newData["wildcard"]
+            //because we already update wilcard in settings , if given here would pop up duplicate error
             setLoading(true)
             try{
 
