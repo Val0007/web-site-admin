@@ -42,7 +42,9 @@ export const AuthProvider = ({ children }:{ children: React.ReactNode }) => {
 
   const login = () => {
     // Redirect to your backend Google OAuth endpoint
-    window.location.href =  'http://localhost:3000/auth/google/login'
+   const url =  import.meta.env.MODE == "development" ? import.meta.env.VITE_API_URL_DEV : import.meta.env.VITE_API_URL_PROD
+
+    window.location.href =  `${url}/auth/google/login`
   };
 
   const logout = () => {
