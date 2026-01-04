@@ -1,7 +1,7 @@
 export interface TabData {
     title: string;
     description?: string;
-    link?: string|undefined;
+    link: string|undefined;
   }
   
   export interface Content {
