@@ -30,7 +30,7 @@ const SettingsTab: React.FC<SettingsTabProps> = ({
         <h3 className="text-lg font-semibold mb-4 text-gray-700">How your site will be visible</h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">Your Custom Wildcard (john.site.com)</label>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Your Custom Wildcard (john.zipfolio.xyz)</label>
             <div className='flex flex-row gap-4'>
               <input
                 type="text"
