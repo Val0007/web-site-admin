@@ -1,7 +1,7 @@
 import type { SiteData } from "../types";
 
 
-export async function updateUser(endpoint: string, data: any, token: string) {
+export async function updateUser(endpoint: string, data: unknown, token: string) {
     try {
       console.log(data)
       const response = await fetch(`${import.meta.env.MODE == "development" ? import.meta.env.VITE_API_URL_DEV : import.meta.env.VITE_API_URL_PROD }${endpoint}`, {
