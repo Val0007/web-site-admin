@@ -61,7 +61,7 @@ const SettingsTab: React.FC<SettingsTabProps> = ({
                     setWildcard(oldWildCard.current)
                 }
                 }
-                catch(e:any){
+                catch{
                     setWildcard(oldWildCard.current)
                     setPopupMsg({titleMsg:"Error",descMsg:`Try a different wildcard`,type:"ERROR",setShow:()=>{}})
                 }

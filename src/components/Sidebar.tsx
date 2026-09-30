@@ -62,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
         onClick={async ()=>{
             const data = getSiteData()
             console.log(data)
-            const newData:any = data
+            const newData: Partial<SiteData> = { ...data }
             delete newData["wildcard"]
             //because we already update wilcard in settings , if given here would pop up duplicate error
             setLoading(true)
@@ -77,10 +77,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, tabsLength,s
             setPopupMsg({titleMsg:"Data updated successfully",descMsg:`Access your site : ${wildcard}.zipfolio.xyz`,type:"SUCCESS",setShow:()=>{}})
             setShowPopup(true)
             }
-            catch(e:any){
+            catch(e){
                 setLoading(false)
-                console.log(e.message);
-                setPopupMsg({titleMsg:e.message,descMsg:"Error",type:"ERROR",setShow:()=>{}})
+                console.log((e as Error).message);
+                setPopupMsg({titleMsg:(e as Error).message,descMsg:"Error",type:"ERROR",setShow:()=>{}})
                 setShowPopup(true)
 
             }
