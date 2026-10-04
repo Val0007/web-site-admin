@@ -26,10 +26,9 @@ function App() {
       portfolioData.initialiseData(data)
       setLoading(false)
       }
-      catch(e:any){
+      catch(e){
         setLoading(false)
-        portfolioData.setPopupMsg({titleMsg:e.message,descMsg:"Error",type:"ERROR",setShow:()=>{}})
-        portfolioData.setPopup(true)
+        portfolioData.setPopupMsg({titleMsg:(e as Error).message,descMsg:"Error",type:"ERROR",setShow:()=>{}})
       }
     }
     getData()
