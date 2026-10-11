@@ -10,3 +10,6 @@ createRoot(document.getElementById('root')!).render(
     </ProtectedRoute>
   </AuthProvider>
 )
+
+// Deliberate lint errors to demonstrate that CI blocks a bad change
+const unusedDemo: any = 1
