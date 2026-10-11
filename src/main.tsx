@@ -11,5 +11,4 @@ createRoot(document.getElementById('root')!).render(
   </AuthProvider>
 )
 
-// Deliberate lint errors to demonstrate that CI blocks a bad change
-const unusedDemo: any = 1
+
