@@ -1,69 +1,68 @@
-# React + TypeScript + Vite
+# ZipFolio admin
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The panel where a user builds their portfolio. They sign in with Google, fill
+in their details, choose how each page looks, and publish.
 
-Currently, two official plugins are available:
+Live: https://web-site-admin-xi.vercel.app (also https://admin.zipfolio.xyz)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## What it uses
 
-## Expanding the ESLint configuration
+- React 19 and TypeScript
+- Vite
+- Tailwind CSS 4
+- GitHub Actions, Vercel
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## What you can do in it
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Structure:** name, description, links, skills and up to three tabs.
+- **Content:** pick a layout for each tab and add up to five items to it.
+- **Site Settings:** choose the site name (the subdomain) and light or dark.
+- **Save and Publish:** sends everything to the backend; the public site shows it.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Sign-in goes through the backend: the button opens `/auth/google/login` on the
+backend, Google asks the user to sign in, and the backend sends them back here
+with a token.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Run it locally
+
+You need Node 20 and the backend running (see the backend README).
+
+```bash
+npm install
+echo "VITE_API_URL_DEV=http://localhost:3000" > .env
+npm run dev            # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+For sign-in to return to your local admin, the backend's `ADMIN_URL` must be
+`http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Settings:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Variable | Used when |
+|---|---|
+| `VITE_API_URL_DEV` | Running `npm run dev` |
+| `VITE_API_URL_PROD` | Building for production; set in the Vercel project. Include `https://`. |
+
+## Checks
+
+```bash
+npm run lint      # ESLint
+npm run build     # type check (tsc) and production build
 ```
+
+There are no automated tests in this repo, only lint and the build. The backend
+has the tests.
+
+## How it is checked and deployed
+
+- **Every pull request:** GitHub Actions runs lint and the build. CodeQL scans
+  the code.
+- **Merge to `main`:** after those checks pass, GitHub Actions builds the app
+  and deploys it to Vercel with the Vercel CLI. Vercel's own automatic deploys are
+  turned off in `vercel.json`, so nothing reaches production without passing the checks.
+- **`main` is protected:** changes go through a pull request, and the CI check
+  must pass.
+- **Dependabot** opens weekly pull requests for npm packages.
+
+The deploy step needs three GitHub secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID` and
+`VERCEL_PROJECT_ID`.
