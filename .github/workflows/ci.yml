@@ -55,7 +55,6 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      # Downloads the project's Production settings, including VITE_API_URL_PROD
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
